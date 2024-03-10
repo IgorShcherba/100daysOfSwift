@@ -8,14 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    private var students: [String] = ["Hermione", "Ron", "Harry"]
+
+    @State private var name: String = ""
+    @State private var selectedStudent: String = ""
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            Form {
+                TextField("Enter Your name: ", text: $name)
+                Text("The name is: \(name)")
+
+                Section {
+                    Picker("Choose a student", selection: $selectedStudent) {
+                        ForEach(students, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                }
+            }
+
+            Button("Clear") {
+                name = ""
+                selectedStudent = ""
+            }
+            .navigationTitle("Some screen")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
     }
 }
 
